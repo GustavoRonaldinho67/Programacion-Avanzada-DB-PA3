@@ -36,3 +36,15 @@ La automatización de este proceso en SQL Server permite centralizar la lógica 
 ### Responsable
 
 Gustavo - Actividad 1
+
+### Actividad 4 - Programación almacenada, transacciones y manejo de errores
+
+Se implementó `004_Actividad4_Programacion_Almacenada.sql` para centralizar el
+registro de pedidos en SQL Server. El procedimiento `sp_RegistrarPedido`
+valida cliente, producto, cantidad y stock; registra pedido y detalle; descuenta
+stock dentro de una transacción; controla concurrencia con bloqueos de actualización
+y revierte la operación ante cualquier error.
+
+También se incluye `sp_ReporteProductosStockBajo`, que demuestra el uso de un
+cursor local para generar un reporte de productos activos cuyo stock está por
+debajo del límite indicado.
