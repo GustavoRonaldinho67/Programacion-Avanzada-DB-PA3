@@ -6,7 +6,7 @@
 *   [Nombre Completo 1] - Actividad 1
 *   [Nombre Completo 2] - Actividad 2
 *   [Nombre Completo 3] - Actividad 3 
-*   [nombre complato 4] - Actividad 4  
+*   Anthony Fernando Alcántara Valencia - Actividad 4
 *  [Victor Daniel aguilar de la cruz] Documentación
 
 ---
@@ -52,7 +52,7 @@ Para garantizar la integridad de los datos, se implementó el procedimiento alma
 
 ### Actividad 4 - Pruebas comparativas y argumentación
 
-**Responsable:** [Tu Nombre Aquí]
+**Responsable:** Anthony Fernando Alcántara Valencia
 
 Para esta actividad se desarrolló un script de pruebas robusto (`004_Actividad4.sql`) que no solo ejecuta las transacciones, sino que también implementa una tabla de auditoría (`ErrorProceso`), funciones para calcular precios y detalles, y una matriz comparativa automática. Esto garantiza que las pruebas no sean solo visuales, sino verificables mediante código.
 
