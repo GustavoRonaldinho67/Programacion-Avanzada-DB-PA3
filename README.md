@@ -85,10 +85,10 @@ Para reproducir las evidencias técnicas requeridas en la rúbrica, ejecute los 
 ## 📸 Evidencias (Actividad 2)
 
 > **📝**
-> Las siguientes evidencias demuestran la ejecución de casos exitosos y fallidos controlados mediante los parámetros de SALIDA y RETURN explicados previamente.
+> Las siguiente evidencia demuestra la ejecución de casos exitosos y fallidos controlados mediante los parámetros de SALIDA y RETURN explicados previamente.
 
 > **🖼️ ACTIVIDAD 2 (Procedimientos almacenados de mantenimiento):**  
-> ![Evidencia Procedimientos](evidencias/02_Actividad2_Procedimientos.png)
+> ![Evidencia Procedimientos](EVIDENCIAS/02_Actividad2_Procedimientos.png)
 
 ---
 
