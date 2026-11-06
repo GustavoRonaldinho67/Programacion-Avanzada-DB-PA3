@@ -200,13 +200,3 @@ BEGIN
 END;
 GO
 
-/* Pruebas sugeridas */
--- EXEC dbo.sp_RegistrarPedido 1, 1, 1, 'WEB';
--- EXEC dbo.sp_ConsultarPedido 41;
--- EXEC dbo.sp_AnularPedido 41;
--- EXEC dbo.sp_ReponerStock 1, 5;
--- EXEC dbo.sp_ReporteVentas '2026-01-01', '2026-12-31';
--- EXEC dbo.sp_ReporteProductosStockBajo 10;
--- EXEC dbo.sp_RegistrarPedido 1, 1, 0, 'WEB';       -- Error controlado
--- EXEC dbo.sp_RegistrarPedido 999, 1, 1, 'WEB';     -- Error controlado
--- EXEC dbo.sp_ReponerStock 1, -5;                   -- Error controlado
