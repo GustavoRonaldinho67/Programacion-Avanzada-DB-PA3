@@ -84,11 +84,11 @@ Para reproducir las evidencias técnicas requeridas en la rúbrica, ejecute los 
 
 ## 📸 Evidencias (Actividad 2)
 
-> **📝 INSTRUCCIÓN PARA REVISIÓN DOCENTE:**
+> **📝**
 > Las siguientes evidencias demuestran la ejecución de casos exitosos y fallidos controlados mediante los parámetros de SALIDA y RETURN explicados previamente.
 
-_Espacio reservado para Captura de Pantalla: Resultados de las 3 pruebas ejecutadas desde el script 01._
-_(Insertar imagen aquí: `evidencias/02_Actividad2_Procedimientos.png`)_
+> **🖼️ ACTIVIDAD 2 (Procedimientos almacenados de mantenimiento):**  
+> ![Evidencia Procedimientos](evidencias/02_Actividad2_Procedimientos.png)
 
 ---
 
@@ -98,5 +98,3 @@ _(Insertar imagen aquí: `evidencias/02_Actividad2_Procedimientos.png`)_
 2.  **Optimización:** El uso de parámetros `OUTPUT` y valores de `RETURN` permite procesar transacciones rápidamente sin enviar _RecordSets_ pesados a través de la red, mejorando la interacción Cliente/Servidor de NovaMarket.
 
 ---
-
-_Documentación elaborada para la evaluación PA3 - ISIL._
