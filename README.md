@@ -5,7 +5,7 @@
 **Integrantes:**
 
 - [Nombre Completo 1] - Actividad 1
-- **Mauricio Rojas Arias** - Actividad 2 - [@chunchope](https://github.com/chunchope) - **Dev Backend:** Desarrollo de Procedimiento Almacenado, control de parámetros OUTPUT y valores RETURN (Act. 2). |
+- **Mauricio Rojas Arias** - Actividad 2 - [@chunchope](https://github.com/chunchope) - Desarrollo de Procedimiento Almacenado, control de parámetros OUTPUT y valores RETURN (Act. 2). |
 - [Nombre Completo 3] - Actividad 3
 - Anthony Fernando Alcántara Valencia - Actividad 4
 - [Victor Daniel aguilar de la cruz] Documentación
@@ -44,7 +44,7 @@ En base al pseudocódigo de la Actividad 1, el equipo de QA implementó un **Pro
 - **Valor de Retorno (`RETURN`):** Se devuelve `1` si el proceso finaliza con éxito. Si ocurre un fallo en alguna regla de negocio (ej. falta de stock), se devuelve código de error negativo (`-1, -2, -3, -4`). Esto permite que la aplicación cliente evalúe si la operación falló o no con un simple condicional lógico sin leer cadenas de texto.
 
 > **🖼️ ACTIVIDAD 2 (Procedimientos almacenados de mantenimiento):**  
-> ![Evidencia Procedimientos](EVIDENCIAS/02_Actividad2_Procedimientos.png)
+> ![Evidencia Procedimientos](evidencia/02_Actividad2_Procedimientos.png)
 
 ---
 
