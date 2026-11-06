@@ -5,7 +5,7 @@
 **Integrantes:**
 
 - [Nombre Completo 1] - Actividad 1
-- **Mauricio Rojas Arias** - Actividad 2 - [@chunchope](https://github.com/chunchope) - Desarrollo de Procedimiento Almacenado, control de parámetros OUTPUT y valores RETURN (Act. 2). |
+- **Mauricio Rojas Arias** - Actividad 2 - [@chunchope](https://github.com/chunchope) - Desarrollo de Procedimiento Almacenado, control de parámetros OUTPUT y valores RETURN.
 - [Nombre Completo 3] - Actividad 3
 - Anthony Fernando Alcántara Valencia - Actividad 4
 - [Victor Daniel aguilar de la cruz] Documentación
