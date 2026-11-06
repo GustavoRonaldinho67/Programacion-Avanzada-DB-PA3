@@ -39,12 +39,21 @@ Gustavo - Actividad 1
 
 ### Actividad 4 - Programación almacenada, transacciones y manejo de errores
 
-Se implementó `004_Actividad4_Programacion_Almacenada.sql` para centralizar el
-registro de pedidos en SQL Server. El procedimiento `sp_RegistrarPedido`
-valida cliente, producto, cantidad y stock; registra pedido y detalle; descuenta
-stock dentro de una transacción; controla concurrencia con bloqueos de actualización
-y revierte la operación ante cualquier error.
+El archivo `004_Actividad4_Programacion_Almacenada.sql` contiene la entrega
+completa del tema 4 sobre SQL Server:
 
-También se incluye `sp_ReporteProductosStockBajo`, que demuestra el uso de un
-cursor local para generar un reporte de productos activos cuyo stock está por
-debajo del límite indicado.
+- Funciones `fn_PrecioVigente` y `fn_DetallePedido` para reutilizar lógica de negocio.
+- `sp_RegistrarPedido`, con validación de cliente, producto, cantidad y stock,
+  bloqueo `UPDLOCK/HOLDLOCK`, transacción atómica y reversión ante errores.
+- `sp_AnularPedido`, que revierte el stock y cambia el estado del pedido dentro
+  de una transacción.
+- `sp_ConsultarPedido`, que devuelve cabecera, cliente, detalle e importe total.
+- `sp_ReponerStock`, con validaciones y control transaccional del inventario.
+- `sp_ReporteVentas`, con filtros por fechas y resumen por canal y estado.
+- `sp_ReporteProductosStockBajo`, que demuestra un cursor local `FAST_FORWARD`.
+- Tabla `ErrorProceso` para registrar número, línea, procedimiento y mensaje de
+  los errores capturados.
+- Casos de prueba positivos y negativos comentados al final del script.
+
+Orden de ejecución: primero `00_esquema_y_datos_base.sql` y después el archivo
+de la actividad 4. Las pruebas se pueden descomentar gradualmente en SQL Server.
