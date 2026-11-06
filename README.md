@@ -37,4 +37,4 @@ La automatización de este proceso en SQL Server permite centralizar la lógica 
 
 Gustavo - Actividad 1
 
-[Actividad 4. Pruebas comparativas y argumentación](004_Actividad4/)
+[Actividad 4. Pruebas comparativas y argumentación](004_Actividad4.sql)

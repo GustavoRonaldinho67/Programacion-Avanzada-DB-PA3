@@ -6,10 +6,15 @@ En una copia de pruebas de NovaMarket, cargar 00_esquema_y_datos_base.sql
 una sola vez. Ejecutar este archivo completo en SQL Server Management Studio.
 Cada ejecución confirma una venta de una unidad del producto 1.
 
-Matriz esperada en una base recién cargada
+Resultados obtenidos con SQL Server LocalDB 15.0.4382.1 sobre la base inicial
                             Pedidos       Detalles       Stock del producto 1
 Venta de 1 unidad           40 -> 41      80 -> 81       20 -> 19
 Solicitud de 999999         41 -> 41      81 -> 81       19 -> 19
+
+El pedido 41 quedó confirmado con una unidad a 300,00. El segundo intento
+devolvió el error 50005. Capturas de la ejecución:
+https://github.com/GustavoRonaldinho67/Programacion-Avanzada-DB-PA3/blob/03e407c/004_Actividad4/confirmacion.png
+https://github.com/GustavoRonaldinho67/Programacion-Avanzada-DB-PA3/blob/03e407c/004_Actividad4/cancelacion.png
 
 El primer caso comprueba que el nuevo pedido pertenece al cliente 1, que su
 detalle contiene una unidad del producto 1 y que esa unidad sale del stock.
