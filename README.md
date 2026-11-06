@@ -37,21 +37,4 @@ La automatización de este proceso en SQL Server permite centralizar la lógica 
 
 Gustavo - Actividad 1
 
-### Actividad 4 - Pruebas comparativas y argumentación
-
-Archivos de la actividad:
-
-- `004_Actividad4_Pruebas_Comparativas.sql`: ejecuta un escenario confirmado y
-  otro cancelado. Compara el total de pedidos y el stock antes y después.
-- `ACTIVIDAD4.md`: matriz de escenarios, interpretación, justificación y orden
-  de ejecución.
-
-El escenario confirmado registra un pedido de una unidad. El escenario cancelado
-solicita una cantidad superior al stock disponible. El procedimiento captura el
-error y revierte los cambios de la transacción.
-
-Orden de ejecución:
-
-1. `00_esquema_y_datos_base.sql`
-2. `004_Actividad4_Programacion_Almacenada.sql`
-3. `004_Actividad4_Pruebas_Comparativas.sql`
+[Actividad 4. Pruebas comparativas y argumentación](004_Actividad4.sql)

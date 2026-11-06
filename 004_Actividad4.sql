@@ -1,10 +1,26 @@
 /*
-PA3 - ACTIVIDAD 4
-PROGRAMACION ALMACENADA, TRANSACCIONES, CURSORES Y MANEJO DE ERRORES
-CASO: NOVAMARKET
+PA3 · NovaMarket
+Actividad 4. Pruebas comparativas y argumentación
 
-Prerequisito: ejecutar 00_esquema_y_datos_base.sql.
-Este script es idempotente: puede ejecutarse mas de una vez.
+En una copia de pruebas de NovaMarket, cargar 00_esquema_y_datos_base.sql
+una sola vez. Ejecutar este archivo completo en SQL Server Management Studio.
+Cada ejecución confirma una venta de una unidad del producto 1.
+
+Matriz esperada en una base recién cargada
+                            Pedidos       Detalles       Stock del producto 1
+Venta de 1 unidad           40 -> 41      80 -> 81       20 -> 19
+Solicitud de 999999         41 -> 41      81 -> 81       19 -> 19
+
+El primer caso comprueba que el nuevo pedido pertenece al cliente 1, que su
+detalle contiene una unidad del producto 1 y que esa unidad sale del stock.
+El segundo exige el error 50005 por stock insuficiente y compara las tres
+tablas con su estado inmediatamente anterior al intento.
+
+La última cuadrícula contiene la matriz obtenida en la ejecución. En una
+venta confirmada, cabecera, detalle y salida de almacén representan la misma
+operación. En el rechazo por stock, SQL Server cancela esa operación antes
+de insertar la cabecera. Un rechazo por otro motivo invalida la prueba,
+aunque los totales coincidan.
 */
 USE NovaMarket;
 GO
@@ -199,3 +215,140 @@ BEGIN
 END;
 GO
 
+-- Registro de las dos pruebas
+SET NOCOUNT ON;
+
+DECLARE @ClienteID INT = 1;
+DECLARE @ProductoID INT = 1;
+DECLARE @StockInicial INT;
+DECLARE @StockDespuesConfirmacion INT;
+DECLARE @StockDespuesCancelacion INT;
+DECLARE @PedidosIniciales INT;
+DECLARE @PedidosDespuesConfirmacion INT;
+DECLARE @PedidosDespuesCancelacion INT;
+DECLARE @DetallesIniciales INT;
+DECLARE @DetallesDespuesConfirmacion INT;
+DECLARE @DetallesDespuesCancelacion INT;
+DECLARE @PedidoConfirmado INT;
+DECLARE @MensajeError NVARCHAR(4000);
+DECLARE @NumeroError INT;
+DECLARE @Resultado TABLE
+(
+    PedidoID INT,
+    Mensaje VARCHAR(100),
+    StockRestante INT,
+    PrecioUnitario DECIMAL(10,2)
+);
+
+SELECT @StockInicial = Stock
+FROM dbo.Producto
+WHERE ProductoID = @ProductoID AND Activo = 1;
+
+IF @@TRANCOUNT <> 0 OR @StockInicial IS NULL OR @StockInicial NOT BETWEEN 1 AND 999999
+    THROW 50101, 'Ejecute la prueba en una sesión sin transacciones abiertas y con el stock de prueba cargado.', 1;
+IF NOT EXISTS (SELECT 1 FROM dbo.Cliente WHERE ClienteID = @ClienteID AND Activo = 1)
+    THROW 50102, 'Falta el cliente activo de la prueba.', 1;
+
+SELECT @PedidosIniciales = COUNT(*)
+FROM dbo.Pedido;
+
+SELECT @DetallesIniciales = COUNT(*)
+FROM dbo.DetallePedido;
+
+SELECT 'ANTES_CONFIRMACION' AS Momento,
+       @PedidosIniciales AS TotalPedidos,
+       @DetallesIniciales AS TotalDetalles,
+       @StockInicial AS StockProducto;
+
+INSERT INTO @Resultado
+EXEC dbo.sp_RegistrarPedido
+     @ClienteID = @ClienteID,
+     @ProductoID = @ProductoID,
+     @Cantidad = 1,
+     @Canal = 'WEB',
+     @FechaPedido = '2026-11-06';
+
+SELECT @PedidoConfirmado = PedidoID FROM @Resultado;
+
+SELECT @StockDespuesConfirmacion = Stock
+FROM dbo.Producto
+WHERE ProductoID = @ProductoID;
+
+SELECT @PedidosDespuesConfirmacion = COUNT(*)
+FROM dbo.Pedido;
+
+SELECT @DetallesDespuesConfirmacion = COUNT(*)
+FROM dbo.DetallePedido;
+
+SELECT 'DESPUES_CONFIRMACION' AS Momento,
+       @PedidosDespuesConfirmacion AS TotalPedidos,
+       @DetallesDespuesConfirmacion AS TotalDetalles,
+       @StockDespuesConfirmacion AS StockProducto,
+       @PedidoConfirmado AS PedidoID;
+
+BEGIN TRY
+    EXEC dbo.sp_RegistrarPedido
+         @ClienteID = @ClienteID,
+         @ProductoID = @ProductoID,
+         @Cantidad = 999999,
+         @Canal = 'WEB',
+         @FechaPedido = '2026-11-06';
+END TRY
+BEGIN CATCH
+    IF ERROR_NUMBER() <> 50005 THROW;
+    SET @NumeroError = ERROR_NUMBER();
+    SET @MensajeError = ERROR_MESSAGE();
+END CATCH;
+
+SELECT @StockDespuesCancelacion = Stock
+FROM dbo.Producto
+WHERE ProductoID = @ProductoID;
+
+SELECT @PedidosDespuesCancelacion = COUNT(*)
+FROM dbo.Pedido;
+
+SELECT @DetallesDespuesCancelacion = COUNT(*)
+FROM dbo.DetallePedido;
+
+SELECT 'DESPUES_CANCELACION' AS Momento,
+       @PedidosDespuesCancelacion AS TotalPedidos,
+       @DetallesDespuesCancelacion AS TotalDetalles,
+       @StockDespuesCancelacion AS StockProducto,
+       @MensajeError AS MotivoCancelacion;
+
+DECLARE @VentaCorrecta BIT = CASE WHEN
+    @StockDespuesConfirmacion = @StockInicial - 1
+    AND @PedidosDespuesConfirmacion = @PedidosIniciales + 1
+    AND @DetallesDespuesConfirmacion = @DetallesIniciales + 1
+    AND EXISTS (
+        SELECT 1
+        FROM dbo.Pedido AS p
+        JOIN dbo.DetallePedido AS d ON d.PedidoID = p.PedidoID
+        WHERE p.PedidoID = @PedidoConfirmado AND p.ClienteID = @ClienteID
+          AND p.Estado = 'CONFIRMADO' AND p.Canal = 'WEB'
+          AND d.ProductoID = @ProductoID AND d.Cantidad = 1
+    ) THEN 1 ELSE 0 END;
+
+DECLARE @RechazoCorrecto BIT = CASE WHEN
+    @NumeroError = 50005 AND @@TRANCOUNT = 0
+    AND @StockDespuesCancelacion = @StockDespuesConfirmacion
+    AND @PedidosDespuesCancelacion = @PedidosDespuesConfirmacion
+    AND @DetallesDespuesCancelacion = @DetallesDespuesConfirmacion
+    THEN 1 ELSE 0 END;
+
+SELECT Escenario, PedidosAntes, PedidosDespues, DetallesAntes, DetallesDespues,
+       StockAntes, StockDespues, NumeroError, Resultado
+FROM (VALUES
+    (1, 'Venta de 1 unidad', @PedidosIniciales, @PedidosDespuesConfirmacion,
+     @DetallesIniciales, @DetallesDespuesConfirmacion, @StockInicial,
+     @StockDespuesConfirmacion, 0, IIF(@VentaCorrecta = 1, 'CORRECTA', 'INCORRECTA')),
+    (2, 'Stock insuficiente', @PedidosDespuesConfirmacion, @PedidosDespuesCancelacion,
+     @DetallesDespuesConfirmacion, @DetallesDespuesCancelacion, @StockDespuesConfirmacion,
+     @StockDespuesCancelacion, @NumeroError, IIF(@RechazoCorrecto = 1, 'CORRECTA', 'INCORRECTA'))
+) AS m(Orden, Escenario, PedidosAntes, PedidosDespues, DetallesAntes,
+       DetallesDespues, StockAntes, StockDespues, NumeroError, Resultado)
+ORDER BY Orden;
+
+IF @VentaCorrecta = 0 OR @RechazoCorrecto = 0
+    THROW 50104, 'La matriz de pruebas contiene una diferencia.', 1;
+GO
