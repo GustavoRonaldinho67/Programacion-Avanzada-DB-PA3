@@ -215,7 +215,7 @@ BEGIN
 END;
 GO
 
--- Registro de las dos pruebas
+-- Estado de las tablas antes y después de cada operación
 SET NOCOUNT ON;
 
 DECLARE @ClienteID INT = 1;
