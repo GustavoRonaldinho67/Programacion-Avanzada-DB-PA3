@@ -25,7 +25,6 @@ BEGIN
     );
 END;
 GO
-
 CREATE OR ALTER FUNCTION dbo.fn_PrecioVigente(@ProductoID INT)
 RETURNS DECIMAL(10,2)
 AS
