@@ -6,7 +6,7 @@
 
 - Gustavo Munoz Izquierdo - Actividad 1
 - **Mauricio Rojas Arias** - Actividad 2 - [@chunchope](https://github.com/chunchope) - Desarrollo de Procedimiento Almacenado, control de parámetros OUTPUT y valores RETURN.
-- Jhoel Leandro Henostroza Minay - Actividad 3
+- Jhoel Leandro Henostroza Minaya - Actividad 3
 - Anthony Fernando Alcántara Valencia - Actividad 4
 - Victor Daniel aguilar de la cruz - Documentación
 
